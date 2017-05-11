@@ -1,5 +1,9 @@
 ---
 applications:
- - name: whatsound
-   random-route: true
-   memory: 128M
+- path: .
+  instances: 1
+  domain: mybluemix.net
+  name: whatsound-orchestrator
+  host: whatsound-orchestrator
+  disk_quota: 256M
+  

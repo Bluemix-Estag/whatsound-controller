@@ -7,7 +7,7 @@ Endpoint to get a JSON object of watson converation response
 REST API example:
 
 ```
-    POST https://whatsound.mybluemix.net/WhatSound
+    POST https://whatsound-orchestrator.mybluemix.net/WhatSound
 ```
 
 Sending a JSON Object having context object and text, to continue Watson Conversation's chat
