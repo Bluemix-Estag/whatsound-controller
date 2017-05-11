@@ -1,0 +1,731 @@
+{
+    "name": "WhatSound-Conversation",
+    "created": "2017-05-10T12:34:50.942Z",
+    "intents": [{
+        "intent": "AllofThem",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "a parada toda",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "geral",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "inteiro",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "me da a lista inteira",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "quero todos",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "toda",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "todas",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "todas as categorias",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "todo",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "todos",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "total",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "tudão",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "tudinho",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "tudo",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "um de cada",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "um para cada",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "capabilities",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "ajuda",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Como voce pode me ajudar",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "funcao",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "função",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "funcoes",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Help",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Help me",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "How can you help",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "me ajude",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "não sei oq dizer",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "nao sei oq falar",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "oque voce faz?",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "O que voce faz",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Suas funções",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Tell me what you can do",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "What can I say",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "What can you do",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "What do you know",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "What things can you do",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "fim",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "adeus",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "final",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "final de conversa",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "nao quero mais conversar",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "termino",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "greeting",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "Boa Noite",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Boa Tarde",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Bom Dia",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Hello",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Oi",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Olá",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "lembrança",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "a musica tem um relacao com",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "eu lembro de um trecho da musica",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "eu sei um pedaço da letra e quero o nome da musica",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "eu sei um trecho de musica",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "eu tenho um pedaco",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "mood",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "como voce esta",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Como voce está?",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "como voce ta",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Tudo bem?",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "tudo em cima?",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "tudo ótimo?",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "vai bem?",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "voce está bem?",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "music",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "aquela banda",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "aquela musica",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "can you turn on the music",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "coletanea",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "coletânea",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "music",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "musica",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "música",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "musicas",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "músicas",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Play some music",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "play song",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "no",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "n",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "nao",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "não",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "nao, seu burro",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "no",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "off_topic",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "agua",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "aho",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "badasd",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "casdasda",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "daeara",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "eafafead",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "faearada",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "faz cafe",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "fora dilma",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "fora temer",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "gaeradawr",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "golpista safado",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "headaed",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "iadaeda",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "jadeade",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "kaddaea",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "lafafe",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "mafeaf",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "moro",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "moro viado",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "nfeafda",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "pedido",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "bota pra tocar",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "coloca pra tocar",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "gostaria de saber da musica",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "gostaria de saber da música",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "gostaria de saber do album",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "gostaria de saber do artista",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "põe pra tocar",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "toque pra mim",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "Thanks",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "Agradeço muito",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Obrigada",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Obrigado",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Thanks",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "Thank you",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }, {
+        "intent": "yes",
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "examples": [{
+            "text": "isso",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "isso mesmo",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "s",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "sim",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "sim, agradeço",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "sim, obrigado",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }, {
+            "text": "yes",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z"
+        }],
+        "description": null
+    }],
+    "updated": "2017-05-10T15:16:55.584Z",
+    "entities": [{
+        "entity": "ajuda",
+        "values": [{
+            "value": "ajuda",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": ["ajuda", "ajude", "estou perdido", "help", "socorro"]
+        }, {
+            "value": "funções",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": ["capacidade", "capaz", "faz", "fazer", "funcionalidade"]
+        }],
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "metadata": null,
+        "description": null
+    }, {
+        "entity": "artist",
+        "values": [],
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "metadata": null,
+        "description": null
+    }, {
+        "entity": "genres",
+        "values": [{
+            "value": "classical",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": []
+        }, {
+            "value": "forró",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": []
+        }, {
+            "value": "indie",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": []
+        }, {
+            "value": "jazz",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": []
+        }, {
+            "value": "pagode",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": []
+        }, {
+            "value": "pop",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": []
+        }, {
+            "value": "rock",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": []
+        }],
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "metadata": null,
+        "description": null
+    }, {
+        "entity": "saudaçoes",
+        "values": [{
+            "value": "educadas",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": ["boa noite", "boa tarde", "bom dia", "oi", "ola", "olá"]
+        }],
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "metadata": null,
+        "description": null
+    }, {
+        "entity": "tipo",
+        "values": [{
+            "value": "album",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": ["coletanea", "coletânea"]
+        }, {
+            "value": "artist",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": ["artist", "artista", "artistas"]
+        }, {
+            "value": "music",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": ["música", "musicas", "músicas"]
+        }],
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "metadata": null,
+        "description": null
+    }, {
+        "entity": "YorN",
+        "values": [{
+            "value": "nao",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": ["n", "nao", "never", "no", "nunca"]
+        }, {
+            "value": "sim",
+            "created": "2017-05-10T12:34:50.942Z",
+            "updated": "2017-05-10T12:34:50.942Z",
+            "metadata": null,
+            "synonyms": ["claro", "exatamente", "exato", "isso", "isso mesmo", "obvio", "s", "sim", "sim sim", "yes"]
+        }],
+        "created": "2017-05-10T12:34:50.942Z",
+        "updated": "2017-05-10T12:34:50.942Z",
+        "metadata": null,
+        "description": null
+    }],
+    "language": "pt-br",
+    "metadata": null,
+    "description": "",
+    "dialog_nodes": [{
+        "go_to": null,
+        "output": null,
+        "parent": null,
+        "context": null,
+        "created": "2017-05-10T12:39:27.405Z",
+        "updated": "2017-05-10T12:39:27.405Z",
+        "metadata": null,
+        "conditions": "anything_else",
+        "description": null,
+        "dialog_node": "node_2_1494419967435",
+        "previous_sibling": "node_3_1494429362575"
+    }, {
+        "go_to": null,
+        "output": {
+            "text": {
+                "values": ["Olá,"],
+                "selection_policy": "sequential"
+            }
+        },
+        "parent": null,
+        "context": null,
+        "created": "2017-05-10T12:39:14.527Z",
+        "updated": "2017-05-10T15:16:01.649Z",
+        "metadata": null,
+        "conditions": "#greeting",
+        "description": null,
+        "dialog_node": "node_1_1494429317497",
+        "previous_sibling": null
+    }, {
+        "go_to": null,
+        "output": {
+            "text": {
+                "values": ["Ola , sou o WhatSound! posso te falar uma coisa ? se vire na sua vida! não posso te ajudar :P"],
+                "selection_policy": "sequential"
+            }
+        },
+        "parent": null,
+        "context": null,
+        "created": "2017-05-10T15:15:51.242Z",
+        "updated": "2017-05-10T15:16:55.584Z",
+        "metadata": null,
+        "conditions": "conversation_start",
+        "description": null,
+        "dialog_node": "node_3_1494429362575",
+        "previous_sibling": "node_1_1494429317497"
+    }],
+    "workspace_id": "1e22c30e-7cfe-436b-a2de-5be5ee5158aa",
+    "counterexamples": []
+}
