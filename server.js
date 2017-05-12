@@ -134,31 +134,30 @@ function treatConversationContext(body, res) {
                         break;
                     case "album":
                         console.log("album type ");
+                        body.context.album = true;
                         spotMedia(body, bodyGoogle, res);
                         break;
                 }
             } else {
                 // Return error message to front end..
-
-
                 console.log('error api google');
                 res.status(response.statusCode).json({
                     status: bodyGoogle.status,
                     message: bodyGoogle.message
                 });
             }
-
         }
-
         request(options, callback);
     } else if (body['context']['trackMedia'] && !body['context']['clipeID']) {
-        console.log('treat utube');
         youtTubeClip(body, res);
+    } else if (body['context']['found'] == false) {
+        delete body['context']['found'];
+        delete body['context']['exitTrackLoop'];
+        res.status(200).json(body);
 
-    } else if (body['context']['letra'] && !body['context']['letraTrigger']) {
-        console.log('treat letra');
-
-
+    } else if (body['context']['sugestao'] && !body['context']['mostrarSugestao']) {
+        console.log('sugestao de música')
+        sugestaoMusica(body, res);
     } else {
         console.log('passou pelo else')
         res.status(200).json(body);
@@ -192,6 +191,11 @@ function spotMedia(body, bodyGoogle, res) {
                 body.context.artistTopTracks = spotBody.topTracks;
                 body.context.artistRelated = spotBody.related;
                 body.context.artistAlbums = spotBody.albums;
+            } else if (bodyGoogle.type == "album") {
+                body.context.albumID = spotBody.id;
+                body.context.albumName = spotBody.album;
+                body.context.albumArtist = spotBody.artista;
+                body.context.albumTracks = spotBody.musicas;
             }
             var req = {};
             req.body = body;
@@ -221,10 +225,7 @@ function youtTubeClip(body, res) {
             var req = {};
             req.body = body;
 
-
             vagalumeLyrics(body, res);
-            //            conversation(req, res);
-
         } else {
             console.log('youtube error : ' + JSON.stringify(spotBody));
             //Set youtube error on body
@@ -272,7 +273,31 @@ function vagalumeLyrics(body, res) {
 }
 
 
+function sugestaoMusica(body, res) {
 
+    var options = {
+        uri: "https://lyrics-api.mybluemix.net/whatsound/api/v1/vagalume/hotspots",
+        method: "GET"
+    }
+
+    function callback(error, response, sugestaoBody) {
+        if (!error && response.statusCode == 200) {
+            sugestaoBody = responseFix(sugestaoBody);
+            body.context.mostrarSugestao = [];
+            for (var track in sugestaoBody.trend) {
+                body.context.mostrarSugestao.push(sugestaoBody.trend[track].artist + "+" + sugestaoBody.trend[track].name);
+            }
+
+            var req = {};
+            req.body = body;
+            //            conversation(req, res);
+            res.status(200).json(body);
+        } else {
+            console.log('sugestao error');
+        }
+    }
+    request(options, callback);
+}
 
 
 

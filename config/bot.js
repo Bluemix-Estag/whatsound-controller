@@ -14,6 +14,7 @@
 
 var watson = require('watson-developer-cloud');
 var CONVERSATION_NAME = "WhatSound-Conversation"; // Conversation name goes here.
+//var 
 var cfenv = require('cfenv');
 
 var fs = require('fs');
@@ -79,7 +80,7 @@ function initConversation() {
     conversationWorkspace = process.env.CONVERSATION_WORKSPACE;
     // if not, look it up by name or create one
     if (!conversationWorkspace) {
-        const workspaceName = CONVERSATION_NAME;
+        const workspaceName = "WhatSound-Conversation-btc";//CONVERSATION_NAME;
         console.log('No conversation workspace configured in the environment.');
         console.log(`Looking for a workspace named '${workspaceName}'...`);
         conversation.listWorkspaces((err, result) => {
