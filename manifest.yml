@@ -6,4 +6,5 @@ applications:
   name: whatsound-orchestrator
   host: whatsound-orchestrator
   disk_quota: 256M
+  memory: 256M
   
