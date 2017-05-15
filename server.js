@@ -81,6 +81,9 @@ function processChatMessage(req, res) {
  */
 app.post("/WhatSound", function (req, res) {
     console.log('Whatsound orchestrator invoked..');
+    
+    
+    
 
     var data = req.body;
     var params = data;
@@ -120,6 +123,7 @@ function treatConversationContext(body, res) {
 
 
             if (!error && response.statusCode == 200 && bodyGoogle.status) {
+                console.log('GOOGLE RESPONSE : '+JSON.stringify(bodyGoogle));
                 switch (bodyGoogle.type) {
                     case "track":
                         body.context.track = true;
@@ -155,7 +159,7 @@ function treatConversationContext(body, res) {
         delete body['context']['exitTrackLoop'];
         res.status(200).json(body);
 
-    } else if (body['context']['sugestao'] && !body['context']['mostrarSugestao']) {
+    } else if (body['context']['suggestion'] && !body['context']['showSuggestions']) {
         console.log('sugestao de música')
         sugestaoMusica(body, res);
     } else {
@@ -202,7 +206,11 @@ function spotMedia(body, bodyGoogle, res) {
             conversation(req, res);
 
         } else {
+            
+            //
             console.log('spotify error : ' + JSON.stringify(spotBody));
+            
+            
         }
     }
 
@@ -283,9 +291,9 @@ function sugestaoMusica(body, res) {
     function callback(error, response, sugestaoBody) {
         if (!error && response.statusCode == 200) {
             sugestaoBody = responseFix(sugestaoBody);
-            body.context.mostrarSugestao = [];
+            body.context.showSuggestions = [];
             for (var track in sugestaoBody.trend) {
-                body.context.mostrarSugestao.push(sugestaoBody.trend[track].artist + "+" + sugestaoBody.trend[track].name);
+                body.context.showSuggestions.push(sugestaoBody.trend[track].artist + "+" + sugestaoBody.trend[track].name);
             }
 
             var req = {};
