@@ -1,7 +1,7 @@
 {
-  "name": "whatsound",
+  "name": "whatsound-controller",
   "main": "server.js",
-  "description": "An orchestrator to manipulate whatsound's microservices",
+  "description": "A controller for Whatsound's microservices",
   "version": "0.1.1",
   "private": false,
   "engines": {

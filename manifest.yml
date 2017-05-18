@@ -3,8 +3,8 @@ applications:
 - path: .
   instances: 1
   domain: mybluemix.net
-  name: whatsound-orchestrator
-  host: whatsound-orchestrator
+  name: whatsound-controller
+  host: whatsound-controller
   disk_quota: 256M
   memory: 256M
   

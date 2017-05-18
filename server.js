@@ -1,17 +1,15 @@
-var express = require("express");
-var app = express();
-var chatbot = require('./config/bot.js');
-
 var bodyParser = require('body-parser');
-var request = require('request');
+var express = require('express');
+var app = require('express')(),
+    Promise = require('bluebird'),
+    request = Promise.promisifyAll(require('request'), {
+        multiArgs: true
+    });
+
 
 
 // parse application/json
 app.use(bodyParser.json())
-
-
-
-
 
 // Add headers
 app.use(function (req, res, next) {
@@ -34,282 +32,172 @@ app.use(function (req, res, next) {
 });
 
 
+app.get('/action', function (req, res) {
+    var action = req.query.action;
+    var query = req.query.query;
+    var bodyGoogle = {
+        type: "",
+        query: ""
+    };
+    console.log('Request to /action made at ' + action);
+    switch (action) {
+        case 'spotify':
+            var opt = {
+                uri: 'https://refinedsearch-api.mybluemix.net/whatsound/api/v1/refine/values?search=' + query,
+                Method: "GET"
+            }
 
-
-
-
-function conversation(req, res) {
-    var params = req.body || null;
-
-    if (Object.keys(params).length != 0) {
-        processChatMessage(req, res);
-    } else {
-        res.status(400).json({
-            error: "true"
-        });
-    }
-
-}
-
-
-function processChatMessage(req, res) {
-    chatbot.sendMessage(req, function (err, data) {
-        if (err) {
-            console.log('Error in sending message: ', err);
-            res.status(err.code || 500).json(err);
-        } else {
-
-            treatConversationContext(data, res);
-            //            res.status(200).json(data);
-        }
-    })
-}
-
-
-/**
- * Endpoint to get a JSON object of WhatSound MicroServices 
- * REST API example:
- * <code>
- * POST https://whatsound.mybluemix.net/
- * </code>
- *
- * Response:
- * [ "Bob", "Jane" ]
- * @return An array of all the visitor names
- 
- * error case : 100 ( Dados invalidos )
- */
-app.post("/WhatSound", function (req, res) {
-    console.log('Whatsound orchestrator invoked..');
-    
-    
-    
-
-    var data = req.body;
-    var params = data;
-
-    if (params === null) {
-        res.status(400).json({
-            "code": 400,
-            "message": "Bad Request ( Invalid parms )"
-        })
-    } else {
-
-        console.log('Orchestrator whatsound route invoked');
-        params = (Object.keys(params).length == 0) ? {
-            text: ""
-        } : params;
-        req.body = params;
-        conversation(req, res);
-    }
-
-
-
-});
-
-
-function treatConversationContext(body, res) {
-    console.log('Conversation response in method: ' + JSON.stringify(body));
-
-    if (body['context']['search'] && !body['context']['exitTrackLoop'] && !body['context']['trackMedia']) {
-        var options = {
-            uri: 'https://refinedsearch-api.mybluemix.net/whatsound/api/v1/refine/values?search=' + body['context']['search'],
-            method: "GET"
-        }
-
-        function callback(error, response, bodyGoogle) {
-
-            var bodyGoogle = responseFix(bodyGoogle)
-
-
-            if (!error && response.statusCode == 200 && bodyGoogle.status) {
-                console.log('GOOGLE RESPONSE : '+JSON.stringify(bodyGoogle));
-                switch (bodyGoogle.type) {
-                    case "track":
-                        body.context.track = true;
-                        console.log('Track type invoked');
-                        spotMedia(body, bodyGoogle, res);
-
-                        break;
-                    case "artist":
-                        console.log("artist type");
-                        body.context.artist = true;
-                        spotMedia(body, bodyGoogle, res);
-                        break;
-                    case "album":
-                        console.log("album type ");
-                        body.context.album = true;
-                        spotMedia(body, bodyGoogle, res);
-                        break;
+            function call(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var info = responseFix(body);
+                    bodyGoogle.type = info.type
+                    bodyGoogle.query = info.query;
+                    var options = {
+                        uri: 'https://music-api.mybluemix.net/whatsound/api/v1/spotify/' + bodyGoogle.type + '/values?query=' + bodyGoogle.query,
+                        Method: "GET"
+                    }
+                    request(options, callback);
+                } else {
+                    console.log('spotify error : ' + JSON.stringify(spotBody));
                 }
-            } else {
-                // Return error message to front end..
-                console.log('error api google');
-                res.status(response.statusCode).json({
-                    status: bodyGoogle.status,
-                    message: bodyGoogle.message
-                });
             }
-        }
-        request(options, callback);
-    } else if (body['context']['trackMedia'] && !body['context']['clipeID']) {
-        youtTubeClip(body, res);
-    } else if (body['context']['found'] == false) {
-        delete body['context']['found'];
-        delete body['context']['exitTrackLoop'];
-        res.status(200).json(body);
 
-    } else if (body['context']['suggestion'] && !body['context']['showSuggestions']) {
-        console.log('sugestao de música')
-        sugestaoMusica(body, res);
-    } else {
-        console.log('passou pelo else')
-        res.status(200).json(body);
-    }
-
-
-
-
-}
-
-function spotMedia(body, bodyGoogle, res) {
-
-    var options = {
-        uri: 'https://music-api.mybluemix.net/whatsound/api/v1/spotify/' + bodyGoogle.type + '/values?query=' + bodyGoogle.query,
-        Method: "GET"
-    }
-
-    function callback(error, response, spotBody) {
-        if (!error && response.statusCode == 200) {
-            spotBody = responseFix(spotBody);
-            if (bodyGoogle.type == "track") {
-                body.context.trackName = spotBody.name;
-                body.context.trackArtist = spotBody.artist;
-                body.context.trackURI = spotBody.uri;
-                body.context.trackURL = spotBody.url;
-                body.context.trackAlbum = spotBody.album;
-            } else if (bodyGoogle.type == "artist") {
-                body.context.artistID = spotBody.id;
-                body.context.artistName = spotBody.artist;
-                body.context.artistURL = spotBody.url;
-                body.context.artistTopTracks = spotBody.topTracks;
-                body.context.artistRelated = spotBody.related;
-                body.context.artistAlbums = spotBody.albums;
-            } else if (bodyGoogle.type == "album") {
-                body.context.albumID = spotBody.id;
-                body.context.albumName = spotBody.album;
-                body.context.albumArtist = spotBody.artista;
-                body.context.albumTracks = spotBody.musicas;
+            function callback(error, response, spotBody) {
+                if (!error && response.statusCode == 200) {
+                    spotBody = responseFix(spotBody);
+                    spotBody.typeGoogle = bodyGoogle.type;
+                    res.send(spotBody);
+                } else {
+                    console.log('spotify error : ' + JSON.stringify(spotBody));
+                }
             }
-            var req = {};
-            req.body = body;
-            conversation(req, res);
+            request(opt, call);
+            break;
+        case 'youtube':
+            var opt1 = {
+                uri: 'https://refinedsearch-api.mybluemix.net/whatsound/api/v1/refine/values?search=' + query,
+                Method: "GET"
+            }
 
-        } else {
+            function call1(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var info = responseFix(body);
+                    bodyGoogle.type = info.type;
+                    bodyGoogle.query = info.query;
+                    if (bodyGoogle.type == "artist" || bodyGoogle.type == "track" || bodyGoogle.type == "album") {
+                        bodyGoogle.query = info.query;
+                        var options1 = {
+                            uri: 'https://video-api.mybluemix.net/whatsound/api/v1/youtube/clip/values?query=' + bodyGoogle.query,
+                            Method: "GET"
+                        }
+                        request(options1, callback1);
+                    }
+
+                } else {
+                    console.log('spotify error : ');
+                }
+            }
+
+            function callback1(error, response, youtubeBody) {
+                if (!error && response.statusCode == 200) {
+                    youtubeBody = responseFix(youtubeBody);
+                    res.send(youtubeBody);
+                } else {
+                    console.log('Youtube error : ' + JSON.stringify(youtubeBody));
+                }
+            }
+            request(opt1, call1);
+            break;
+        case 'lyrics':
+            var opt2 = {
+                uri: 'https://refinedsearch-api.mybluemix.net/whatsound/api/v1/refine/values?search=' + query,
+                Method: "GET"
+            }
+
+            function call2(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var info = responseFix(body);
+                    if (bodyGoogle.type != "artist" || bodyGoogle.type != "track" || bodyGoogle.type != "album") {
+                        bodyGoogle.query = info.query;
+                        bodyGoogle.track = (JSON.stringify(bodyGoogle.query)).split("+")[0];
+                        bodyGoogle.artist = (JSON.stringify(bodyGoogle.query)).split("+")[1];
+                        var options2 = {
+                            uri: 'https://lyrics-api.mybluemix.net/whatsound/api/v1/vagalume/lyrics/values?track=' + bodyGoogle.track + '&artist=' + bodyGoogle.artist,
+                            Method: "GET"
+                        }
+                        request(options2, callback2);
+                    }
+
+                } else {
+                    console.log('Lyrics error : ');
+                }
+            }
+
+            function callback2(error, response, lyricsBody) {
+                if (!error && response.statusCode == 200) {
+                    lyricsBody = responseFix(lyricsBody);
+                    res.send(lyricsBody);
+                } else {
+                    console.log('Lyrics error : ' + JSON.stringify(lyricsBody));
+                }
+            }
+            request(opt2, call2);
+            break;
+        case 'toptracks':
+            var trackList = [];
+            var urlList = [];
+            var opt3 = {
+                uri: 'https://lyrics-api.mybluemix.net/whatsound/api/v1/vagalume/hotspots',
+                Method: "GET"
+            }
             
-            //
-            console.log('spotify error : ' + JSON.stringify(spotBody));
-            
-            
-        }
+
+            function call3(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var info = responseFix(body);
+                    for (var i = 0; i < info['trend'].length; i++) {
+                        trackList.push(info['trend'][i].name + " + " + info['trend'][i].artist);
+                    }
+                    
+                    var uri = 'https://music-api.mybluemix.net/whatsound/api/v1/spotify/track/values?query=';
+                    for (var i = 0; i < trackList.length; i++) {
+                        urlList.push(uri + trackList[i]);
+                    }
+                    Promise.map(urlList, function (url) {
+                        return request.getAsync(url).spread(function (resp, body1) {
+                            return [body1, url];
+                        });
+                    }).then(function (results) {
+                        res.send(responseFixArray(results));
+                    }).catch(function (err) {
+                        console.log(err);
+                    })
+                }
+            }
+            request(opt3, call3);
+            break;
     }
-
-    request(options, callback);
-}
-
-
-
-function youtTubeClip(body, res) {
-
-    var options = {
-        uri: 'https://video-api.mybluemix.net/whatsound/api/v1/youtube/clip/values?query=' + body.context.trackName + '%20' + body.context.trackArtist,
-        Method: "GET"
-    }
-
-    function callback(error, response, youtubeBody) {
-        if (!error && response.statusCode == 200) {
-            youtubeBody = responseFix(youtubeBody);
-            body.context.clipeID = youtubeBody[0].id;
-            var req = {};
-            req.body = body;
-
-            vagalumeLyrics(body, res);
-        } else {
-            console.log('youtube error : ' + JSON.stringify(spotBody));
-            //Set youtube error on body
-            vagalumeLyrics(body, res);
-        }
-    }
-
-    request(options, callback);
-}
-
+});
 
 function responseFix(data) {
     var str = JSON.stringify(data).split("\\n").join("<br>");
     str = str.replace(/\\/g, '');
     str = str.slice(1);
     str = str.slice(0, str.lastIndexOf('"'));
+    console.log(str);
     return JSON.parse(str);
+    
+
+} 
+
+function responseFixArray(data){
+    var returnData = [];
+    for(var dt in data){
+        console.log(data[dt][0]); 
+        if(data[dt][0] != "") returnData.push(responseFix(data[dt][0]));
+    }
+    return returnData;
 }
-
-
-
-function vagalumeLyrics(body, res) {
-    console.log('in method : ' + body['context']['trackName']);
-    var options = {
-        uri: "https://lyrics-api.mybluemix.net/whatsound/api/v1/vagalume/lyrics/values?track=" + body['context']['trackName'] + '&artist=' + body['context']['trackArtist'],
-        method: "GET"
-
-    }
-
-    function callback(error, response, vagalumeBody) {
-        if (!error && response.statusCode == 200) {
-            vagalumeBody = responseFix(vagalumeBody);
-            body.context.showLyrics = vagalumeBody.lyrics.track;
-            console.log(JSON.stringify(body));
-            //            res.status(200).json(body);
-            var req = {};
-            req.body = body;
-            conversation(req, res);
-        } else {
-            console.log('Vagalume error: ' + JSON.stringify(vagalumeBody));
-        }
-    }
-    request(options, callback);
-
-}
-
-
-function sugestaoMusica(body, res) {
-
-    var options = {
-        uri: "https://lyrics-api.mybluemix.net/whatsound/api/v1/vagalume/hotspots",
-        method: "GET"
-    }
-
-    function callback(error, response, sugestaoBody) {
-        if (!error && response.statusCode == 200) {
-            sugestaoBody = responseFix(sugestaoBody);
-            body.context.showSuggestions = [];
-            for (var track in sugestaoBody.trend) {
-                body.context.showSuggestions.push(sugestaoBody.trend[track].artist + "+" + sugestaoBody.trend[track].name);
-            }
-
-            var req = {};
-            req.body = body;
-            //            conversation(req, res);
-            res.status(200).json(body);
-        } else {
-            console.log('sugestao error');
-        }
-    }
-    request(options, callback);
-}
-
-
-
-
 //serve static file (index.html, images, css)
 app.use(express.static(__dirname + '/views'));
 
@@ -317,5 +205,5 @@ app.use(express.static(__dirname + '/views'));
 
 var port = process.env.PORT || 4000
 app.listen(port, function () {
-    console.log("To view your app, open this link in your browser: http://localhost:" + port);
+    console.log("Server Running on http://localhost:" + port);
 });
