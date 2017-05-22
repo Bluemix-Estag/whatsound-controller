@@ -46,9 +46,10 @@ app.get('/action', function (req, res) {
                 uri: 'https://refinedsearch-api.mybluemix.net/whatsound/api/v1/refine/values?search=' + query,
                 Method: "GET"
             }
-
+            console.log(opt.uri)
             function call(error, response, body) {
                 if (!error && response.statusCode == 200) {
+
                     var info = responseFix(body);
                     bodyGoogle.type = info.type
                     bodyGoogle.query = info.query;
@@ -59,6 +60,7 @@ app.get('/action', function (req, res) {
                     request(options, callback);
                 } else {
                     console.log('spotify error : ' + JSON.stringify(spotBody));
+                    res.send(error);
                 }
             }
 
@@ -69,6 +71,7 @@ app.get('/action', function (req, res) {
                     res.send(spotBody);
                 } else {
                     console.log('spotify error : ' + JSON.stringify(spotBody));
+                    res.send(error);
                 }
             }
             request(opt, call);
@@ -95,6 +98,11 @@ app.get('/action', function (req, res) {
 
                 } else {
                     console.log('spotify error : ');
+                    var result = {
+                        error: 20,
+                        message: "Not Found"
+                    }
+                    res.send(result);
                 }
             }
 
@@ -104,6 +112,11 @@ app.get('/action', function (req, res) {
                     res.send(youtubeBody);
                 } else {
                     console.log('Youtube error : ' + JSON.stringify(youtubeBody));
+                    var result = {
+                        error: 10,
+                        message: "Not Found"
+                    }
+                    res.send(result);
                 }
             }
             request(opt1, call1);
@@ -116,29 +129,35 @@ app.get('/action', function (req, res) {
 
             function call2(error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    var info = responseFix(body);
+                                        console.log('Google: ',JSON.stringify(JSON.parse(body)));
+//                    var info = responseFix(body);
+                    var info = JSON.parse(body);
                     if (bodyGoogle.type != "artist" || bodyGoogle.type != "track" || bodyGoogle.type != "album") {
                         bodyGoogle.query = info.query;
                         bodyGoogle.track = (JSON.stringify(bodyGoogle.query)).split("+")[0];
                         bodyGoogle.artist = (JSON.stringify(bodyGoogle.query)).split("+")[1];
                         var options2 = {
-                            uri: 'https://lyrics-api.mybluemix.net/whatsound/api/v1/vagalume/lyrics/values?track=' + bodyGoogle.track + '&artist=' + bodyGoogle.artist,
+                            uri: ('https://lyrics-api.mybluemix.net/whatsound/api/v1/vagalume/lyrics/values?track=' + bodyGoogle.track + '&artist=' + bodyGoogle.artist).replace(/\"/g,''),
                             Method: "GET"
                         }
+                        console.log(options2.uri);
                         request(options2, callback2);
                     }
 
                 } else {
-                    console.log('Lyrics error : ');
+                    console.log('Lyrics error : '+JSON.stringify(JSON.pabody));
+                    res.status(response.statusCode).json(JSON.parse(body));
                 }
             }
 
             function callback2(error, response, lyricsBody) {
                 if (!error && response.statusCode == 200) {
-                    lyricsBody = responseFix(lyricsBody);
-                    res.send(lyricsBody);
+
+                    lyricsBody = responseLyricsFix(JSON.parse(lyricsBody));
+                    res.status(response.statusCode).json(lyricsBody);
                 } else {
                     console.log('Lyrics error : ' + JSON.stringify(lyricsBody));
+                    res.status(response.statusCode).json(JSON.parse(lyricsBody));
                 }
             }
             request(opt2, call2);
@@ -171,6 +190,7 @@ app.get('/action', function (req, res) {
                         res.send(responseFixArray(results));
                     }).catch(function (err) {
                         console.log(err);
+                        res.send(err);
                     })
                 }
             }
@@ -184,11 +204,15 @@ function responseFix(data) {
     str = str.replace(/\\/g, '');
     str = str.slice(1);
     str = str.slice(0, str.lastIndexOf('"'));
-    console.log(str);
     return JSON.parse(str);
     
 
 } 
+
+
+function responseLyricsFix(data){
+    return JSON.parse(JSON.stringify(data).split("\\n").join("<br>"));
+}
 
 function responseFixArray(data){
     var returnData = [];
