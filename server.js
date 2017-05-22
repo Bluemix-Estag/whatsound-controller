@@ -59,8 +59,8 @@ app.get('/action', function (req, res) {
                     }
                     request(options, callback);
                 } else {
-                    console.log('spotify error : ' + JSON.stringify(spotBody));
-                    res.send(error);
+                    console.log('Google error: '+ JSON.stringify(body));
+                    res.status(response.statusCode).json({status: body.status, message: body.message});
                 }
             }
 
@@ -71,11 +71,7 @@ app.get('/action', function (req, res) {
                     res.send(spotBody);
                 } else {
                     console.log('spotify error : ' + JSON.stringify(spotBody));
-                    var result = {
-                        code: 40,
-                        message: "Track not found"
-                    }
-                    res.send(result);
+                    res.status(404).json({status: false,message: "Track not found"});
                 }
             }
             request(opt, call);
@@ -101,12 +97,8 @@ app.get('/action', function (req, res) {
                     }
 
                 } else {
-                    console.log('spotify error : ');
-                    var result = {
-                        error: 20,
-                        message: "Not Found"
-                    }
-                    res.send(result);
+                                  console.log('Google error: '+ JSON.stringify(body));
+                    res.status(response.statusCode).json({status: body.status, message: body.message});
                 }
             }
 
@@ -116,11 +108,8 @@ app.get('/action', function (req, res) {
                     res.send(youtubeBody);
                 } else {
                     console.log('Youtube error : ' + JSON.stringify(youtubeBody));
-                    var result = {
-                        error: 10,
-                        message: "Not Found"
-                    }
-                    res.send(result);
+                                      console.log('Youtube error: '+ JSON.stringify(body));
+                    res.status(404).json({status: false, message: "Music video not found"});
                 }
             }
             request(opt1, call1);
@@ -149,8 +138,8 @@ app.get('/action', function (req, res) {
                     }
 
                 } else {
-                    console.log('Lyrics error : '+JSON.stringify(JSON.pabody));
-                    res.status(response.statusCode).json(JSON.parse(body));
+                    console.log('Google error: '+ JSON.stringify(body));
+                    res.status(response.statusCode).json({status: body.status, message: body.message});
                 }
             }
 
@@ -161,7 +150,7 @@ app.get('/action', function (req, res) {
                     res.status(response.statusCode).json(lyricsBody);
                 } else {
                     console.log('Lyrics error : ' + JSON.stringify(lyricsBody));
-                    res.status(response.statusCode).json(JSON.parse(lyricsBody));
+                    res.status(response.statusCode).json({status: lyricsBody.status, message:lyricsBody.message});
                 }
             }
             request(opt2, call2);
@@ -196,6 +185,8 @@ app.get('/action', function (req, res) {
                         console.log(err);
                         res.send(err);
                     })
+                }else{
+                    res.status(response.statusCode).json({status: false,message:"No top trending tracks found"});
                 }
             }
             request(opt3, call3);
