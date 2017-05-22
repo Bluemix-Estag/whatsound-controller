@@ -71,7 +71,11 @@ app.get('/action', function (req, res) {
                     res.send(spotBody);
                 } else {
                     console.log('spotify error : ' + JSON.stringify(spotBody));
-                    res.send(error);
+                    var result = {
+                        code: 40,
+                        message: "Track not found"
+                    }
+                    res.send(result);
                 }
             }
             request(opt, call);
