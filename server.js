@@ -6,8 +6,6 @@ var app = require('express')(),
         multiArgs: true
     });
 
-
-
 // parse application/json
 app.use(bodyParser.json())
 
@@ -98,6 +96,7 @@ app.get('/action', function (req, res) {
             request(opt, call);
             break;
         case 'youtube':
+            console.log("porta do youtube");
             var opt1 = {
                 uri: 'https://refinedsearch-api.mybluemix.net/whatsound/api/v1/refine/values?search=' + query,
                 Method: "GET"
@@ -105,6 +104,7 @@ app.get('/action', function (req, res) {
 
             function call1(error, response, body) {
                 if (!error && response.statusCode == 200) {
+                    console.log("entrou");
                     var info = responseFix(body);
                     bodyGoogle.type = info.type;
                     bodyGoogle.query = info.query;
@@ -119,10 +119,14 @@ app.get('/action', function (req, res) {
 
                 } else {
                     console.log('Google error: ' + JSON.stringify(body));
-                    res.status(response.statusCode).json({
-                        status: body.status,
-                        message: body.message
-                    });
+                    var result = {
+                        code: 404,
+                        status: false,
+                        message: "Not Found"
+                    }
+                    res.setHeader('content-type','application/json');
+                    res.status(404).send(result);
+//                    
                 }
             }
 
@@ -132,12 +136,13 @@ app.get('/action', function (req, res) {
                     youtubeBody = JSON.parse(youtubeBody);
                     res.send(youtubeBody);
                 } else {
-                    console.log('Youtube error : ' + JSON.stringify(youtubeBody));
-                    console.log('Youtube error: ' + JSON.stringify(body));
-                    res.status(404).json({
+                    var result = {
+                        code: 404,
                         status: false,
-                        message: "Music video not found"
-                    });
+                        message: "Not Found"
+                    }
+                    res.setHeader('content-type','application/json');
+                    res.status(404).send(result);
                 }
             }
             request(opt1, call1);
@@ -147,18 +152,20 @@ app.get('/action', function (req, res) {
                 uri: 'https://refinedsearch-api.mybluemix.net/whatsound/api/v1/refine/values?search=' + query,
                 Method: "GET"
             }
-
+            console.log(query);
             function call2(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     console.log('Google: ', JSON.stringify(JSON.parse(body)));
                     //                    var info = responseFix(body);
                     var info = JSON.parse(body);
+                console.log('info: ',JSON.stringify(info));
                     if (bodyGoogle.type != "artist" || bodyGoogle.type != "track" || bodyGoogle.type != "album") {
                         bodyGoogle.query = info.query;
-                        bodyGoogle.track = (JSON.stringify(bodyGoogle.query)).split("+")[0];
-                        bodyGoogle.artist = (JSON.stringify(bodyGoogle.query)).split("+")[1];
+                        var googleQuerySplit = JSON.stringify(bodyGoogle.query).split('+');
+                        bodyGoogle.track = (googleQuerySplit.length>1)?googleQuerySplit[0]:'';
+                        bodyGoogle.artist = (googleQuerySplit.length>1)?googleQuerySplit[1]:googleQuerySplit[0];
                         var options2 = {
-                            uri: ('https://lyrics-api.mybluemix.net/whatsound/api/v1/vagalume/lyrics/values?track=' + removeDiacritics(bodyGoogle.track) + '&artist=' + removeDiacritics(bodyGoogle.artist)).replace(/\"/g, ''),
+                            uri: 'https://lyrics-api.mybluemix.net/whatsound/api/v1/vagalume/lyrics/values?track=' + removeDiacritics(bodyGoogle.track) + '&artist=' + removeDiacritics(bodyGoogle.artist),
                             Method: "GET"
                         }
                         console.log(options2.uri);
@@ -167,24 +174,30 @@ app.get('/action', function (req, res) {
 
                 } else {
                     console.log('Google error: ' + JSON.stringify(body));
-                    res.status(response.statusCode).json({
-                        status: body.status,
-                        message: body.message
-                    });
+                    var result = {
+                        code: 404,
+                        status: false,
+                        message: "Not Found"
+                    }
+                    res.setHeader('content-type','application/json');
+                    res.status(404).send(result);
                 }
             }
 
             function callback2(error, response, lyricsBody) {
                 if (!error && response.statusCode == 200) {
-
-                    lyricsBody = responseLyricsFix(JSON.parse(lyricsBody));
+                    console.log('test');
+                    lyricsBody = (JSON.parse(lyricsBody));
                     res.status(response.statusCode).json(lyricsBody);
                 } else {
                     console.log('Lyrics error : ' + JSON.stringify(lyricsBody));
-                    res.status(response.statusCode).json({
-                        status: lyricsBody.status,
-                        message: lyricsBody.message
-                    });
+                    var result = {
+                        code: 404,
+                        status: false,
+                        message: "Not Found"
+                    }
+                    res.setHeader('content-type','application/json');
+                    res.status(404).send(result);
                 }
             }
             request(opt2, call2);
@@ -220,10 +233,13 @@ app.get('/action', function (req, res) {
                         res.send(err);
                     })
                 } else {
-                    res.status(response.statusCode).json({
+                    var result = {
+                        code: 404,
                         status: false,
-                        message: "No top trending tracks found"
-                    });
+                        message: "Not Found"
+                    }
+                    res.setHeader('content-type','application/json');
+                    res.status(404).send(result);
                 }
             }
             request(opt3, call3);
@@ -360,13 +376,6 @@ var defaultDiacriticsRemovalMap = [
            return diacriticsMap[a] || a; 
         });
     }  
-
-
-//
-
-
-
-
 var port = process.env.PORT || 4000
 app.listen(port, function () {
     console.log("Server Running on http://localhost:" + port);

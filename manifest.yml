@@ -6,5 +6,5 @@ applications:
   name: whatsound-controller
   host: whatsound-controller
   disk_quota: 256M
-  memory: 512M
+  memory: 128M
   
