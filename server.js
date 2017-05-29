@@ -253,7 +253,9 @@ function responseFix(data) {
 function responseLyricsFix(data) {
     return JSON.parse(JSON.stringify(data).split("\\n").join("<br>"));
 }
-
+function removeDiacritics(str) { 
+    return encodeURI(str).replace(/%20/g, "+"); 
+    }
 function responseFixArray(data) {
     var returnData = [];
     for (var dt in data) {
