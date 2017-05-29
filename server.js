@@ -52,43 +52,36 @@ app.get('/action', function (req, res) {
                     var info = JSON.parse(body);
                     bodyGoogle.type = info.type
                     bodyGoogle.query = info.query;
-
-
-
                     var options = {
-                        uri: 'https://music-api.mybluemix.net/whatsound/api/v1/spotify/' + bodyGoogle.type + '/values?query=' + removeDiacritics(bodyGoogle.query),
+                        uri: 'https://music-api.mybluemix.net/whatsound/api/v1/spotify/' + bodyGoogle.type + '/values?query=' + bodyGoogle.query,
                         Method: "GET"
                     }
                     
                     console.log(options.uri);
 
                     function callback(error, response, spotBody) {
-                        
-            
                         console.log('spotBody: '+JSON.stringify(spotBody));
-                        
                         if (!error && response.statusCode == 200) {
                             console.log("resposta: ");
                             console.log(JSON.stringify(JSON.parse(spotBody)));
                             spotBody = JSON.parse(spotBody);
-
                             spotBody.typeGoogle = bodyGoogle.type;
                             res.setHeader('content-type','application/json');
                             res.status(200).json(spotBody);
                         } else {
                             console.log('spotify error : ' + JSON.stringify(spotBody));
                             res.status(404).json({
-                                status: false,
-                                message: "Track not found"
+                                "status": false,
+                                "message": "Track not found"
                             });
                         }
                     }
                     request(options, callback);
                 } else {
                     console.log('Google error: ' + JSON.stringify(body));
-                    res.status(response.statusCode).json({
+                    res.status(404).json({
                         status: false,
-                        message: "Not found"
+                        message: "Google Error : Not found"
                     });
                 }
             }
