@@ -40,6 +40,7 @@ app.get('/action', function (req, res) {
     console.log('Request to /action made at ' + action);
     switch (action) {
         case 'spotify':
+            console.log("entrou no spotify");
             var opt = {
                 uri: 'https://refinedsearch-api.mybluemix.net/whatsound/api/v1/refine/values?search=' + query,
                 Method: "GET"
@@ -59,7 +60,7 @@ app.get('/action', function (req, res) {
 
                     console.log(options.uri);
 
-                    function callback(error, response, spotBody) {
+                    function callbackS(error, response, spotBody) {
                         console.log('spotBody: ' + JSON.stringify(spotBody));
                         if (!error && response.statusCode == 200) {
                             console.log("resposta: ");
@@ -76,7 +77,7 @@ app.get('/action', function (req, res) {
                             });
                         }
                     }
-                    request(options, callback);
+                    request(options, callbackS);
                 } else {
                     console.log('Google error: ' + JSON.stringify(body));
                     res.status(404).json({
@@ -88,6 +89,58 @@ app.get('/action', function (req, res) {
 
             request(opt, call);
             break;
+            
+        case 'deezer':
+            console.log("entrou no deezer");
+            var optD = {
+                uri: 'https://refinedsearch-api.mybluemix.net/whatsound/api/v1/refine/values?search=' + query,
+                Method: "GET"
+            }
+            console.log(optD.uri)
+
+            function call1(error, response, body) {
+                if (!error && response.statusCode == 200) {
+
+                    var info = JSON.parse(body);
+                    bodyGoogle.type = info.type
+                    bodyGoogle.query = info.query;
+                    var optionsD = {
+                        uri: 'https://musicdeezer-api.mybluemix.net/whatsound/api/v1/deezer/track/values?query=' + bodyGoogle.query,
+                        Method: "GET"
+                    }
+
+                    console.log(optionsD.uri);
+
+                    function callback(error, response, deezerBody) {
+                        console.log('deezerBody: ' + JSON.stringify(deezerBody));
+                        if (!error && response.statusCode == 200) {
+                            console.log("resposta: ");
+                            console.log(JSON.stringify(JSON.parse(deezerBody)));
+                            deezerBody = JSON.parse(deezerBody);
+                            deezerBody[0].typeGoogle = bodyGoogle.type
+                            res.setHeader('content-type', 'application/json');
+                            // res.status(200).json({deezerBody,"typeGoogle": bodyGoogle.type});
+                            res.status(200).json(deezerBody);
+                        } else {
+                            console.log('spotify error : ' + JSON.stringify(deezerBody));
+                            res.status(404).json({
+                                "status": false,
+                                "message": "Track not found"
+                            });
+                        }
+                    }
+                    request(optionsD, callback);
+                } else {
+                    console.log('Google error: ' + JSON.stringify(body));
+                    res.status(404).json({
+                        status: false,
+                        message: "Google Error : Not found"
+                    });
+                }
+            }
+
+            request(optD, call1);
+            break;
         case 'youtube':
             console.log("porta do youtube");
             var opt1 = {
@@ -95,7 +148,7 @@ app.get('/action', function (req, res) {
                 Method: "GET"
             }
 
-            function call1(error, response, body) {
+            function call2(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     console.log("entrou");
                     var info = responseFix(body);
@@ -138,7 +191,7 @@ app.get('/action', function (req, res) {
                     res.status(404).send(result);
                 }
             }
-            request(opt1, call1);
+            request(opt1, call2);
             break;
         case 'lyrics':
             var opt2 = {
@@ -147,7 +200,7 @@ app.get('/action', function (req, res) {
             }
             console.log(query);
 
-            function call2(error, response, body) {
+            function call3(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     console.log('Google: ', JSON.stringify(JSON.parse(body)));
                     //                    var info = responseFix(body);
@@ -194,7 +247,7 @@ app.get('/action', function (req, res) {
                     res.status(404).send(result);
                 }
             }
-            request(opt2, call2);
+            request(opt2, call3);
             break;
         case 'toptracks':
             var trackList = [];
@@ -205,7 +258,7 @@ app.get('/action', function (req, res) {
             }
 
 
-            function call3(error, response, body) {
+            function call4(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = responseFix(body);
                     for (var i = 0; i < info['trend'].length; i++) {
@@ -236,7 +289,7 @@ app.get('/action', function (req, res) {
                     res.status(404).send(result);
                 }
             }
-            request(opt3, call3);
+            request(opt3, call4);
             break;
     }
 });
